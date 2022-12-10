@@ -1,17 +1,17 @@
-package com.example.noteapp.ui.fragments
+package com.example.noteapp.ui.fragments.onboard
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.noteapp.R
 import com.example.noteapp.databinding.FragmentOnBoardBinding
 import com.example.noteapp.ui.adapter.FragmentPagerAdapter
+import com.example.noteapp.utils.PreferenceHelper
 import com.google.android.material.tabs.TabLayoutMediator
 
 class OnBoardFragment : Fragment() {
@@ -29,49 +29,55 @@ class OnBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initialize()
-        clickText()
-        scrollPager()
-        homeClick()
-        TabLayoutMediator(binding.tabLayout, binding.viewPager){ _, _ ->
-        } .attach()
+        setOnClickListener()
+        transition()
     }
 
-    private fun initialize() {
-        binding.viewPager.adapter = FragmentPagerAdapter(this@OnBoardFragment)
+    private fun initialize() = with(binding.viewPager) {
+        adapter = FragmentPagerAdapter(this@OnBoardFragment)
     }
 
-    private fun homeClick() {
-        binding.tvStartWork.setOnClickListener {
-            findNavController().navigate(R.id.action_onBoardFragment_to_noteAppFragment)
+    // Логика всех кликов
+    private fun setOnClickListener() = with(binding) {
+        // Клик на "Пропусить"
+        skip.setOnClickListener {
+            if (viewPager.currentItem < 3)
+                viewPager.setCurrentItem(viewPager.currentItem + 1, true)
         }
-    }
-
-    private fun scrollPager() = with(binding) {
+        // Логика View Pager(a)
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        tvStartWork.isInvisible = true
+                        tvStartWork.isVisible = false
                         skip.isVisible = true
                     }
                     1 -> {
-                        tvStartWork.isInvisible = true
+                        tvStartWork.isVisible = false
                         skip.isVisible = true
                     }
                     2 -> {
                         tvStartWork.isVisible = true
-                        skip.isInvisible = true
+                        skip.isVisible = false
                     }
                 }
                 super.onPageSelected(position)
             }
         })
+        // Клик на "Начать работу"
+        tvStartWork.setOnClickListener {
+            findNavController().navigate(R.id.action_onBoardFragment_to_noteAppFragment)
+        }
+        // Наш индикатор
+        TabLayoutMediator(binding.tabLayout, binding.viewPager){ tab, pos ->
+        } .attach()
     }
 
-    private fun clickText() = with(binding.viewPager) {
-        binding.skip.setOnClickListener {
-            if (currentItem < 3)
-                setCurrentItem(currentItem + 1, true)
+    private fun transition() {
+        if (PreferenceHelper.showOnBoard){
+            findNavController().navigate(R.id.action_onBoardFragment_to_noteAppFragment)
+        }else {
+            PreferenceHelper.showOnBoard = true
         }
     }
 }

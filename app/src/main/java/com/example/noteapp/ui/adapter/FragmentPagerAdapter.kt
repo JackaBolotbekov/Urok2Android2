@@ -3,12 +3,11 @@ package com.example.noteapp.ui.adapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.noteapp.ui.fragments.OnBoardPagerFragment
-import com.example.noteapp.ui.fragments.OnBoardPagerFragment.Companion.KEY
+import com.example.noteapp.ui.fragments.onboard.OnBoardPagerFragment
+import com.example.noteapp.ui.fragments.onboard.OnBoardPagerFragment.Companion.KEY
 
-class FragmentPagerAdapter (
-    fragment: Fragment
-        ) : FragmentStateAdapter(fragment){
+class FragmentPagerAdapter (fragment: Fragment) : FragmentStateAdapter(fragment) {
+
     override fun getItemCount(): Int {
         return 3
     }

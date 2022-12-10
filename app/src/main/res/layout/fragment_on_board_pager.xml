@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#0E0C0C"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.OnBoardPagerFragment">
+    tools:context=".ui.fragments.onboard.OnBoardPagerFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view1"
@@ -22,7 +22,8 @@
             android:id="@+id/lottie_animation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:lottie_autoPlay="true" />
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
 
     </com.google.android.material.card.MaterialCardView>
 

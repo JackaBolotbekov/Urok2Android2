@@ -1,4 +1,4 @@
-package com.example.noteapp.ui.fragments
+package com.example.noteapp.ui.fragments.onboard
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -43,6 +43,6 @@ class OnBoardPagerFragment : Fragment() {
     }
 
     companion object {
-        const val KEY = "oBoard"
+        const val KEY = "onBoard"
     }
 }
